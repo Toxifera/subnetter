@@ -1,6 +1,6 @@
 class Subnetter:
 	
-	def findSubnet(self,data):
+	def _findSubnet(self,data):
 	
 		for x in range(0,len(data)):
 			if data[x]=="/":
@@ -9,7 +9,7 @@ class Subnetter:
 		return subnetfound
 	
 		#Searching IP data from input
-	def findIP(self,data):
+	def _findIP(self,data):
 
 		for t in range(0,len(data)):
 			if data[t]=="/":
@@ -17,7 +17,7 @@ class Subnetter:
 		return IP
 
 		#A function that reverses string.
-	def reverseString(self,string):
+	def _reverseString(self,string):
 		temp=[]
 		templength=len(string)
 		String=""
@@ -38,7 +38,7 @@ class Subnetter:
 	#First one is: Controlling IP's syntax.Count of dots.
 	#Second one is: Controlling IP's numbers and syntax(words,blanks etc).IP numbers must be between 0 and 255(including).
 	#Third one is: Controlling Subnet.Subnet must be between 0 and 32(including).
-	def subnetControl(self,IP,subnet,Parts):
+	def _subnetControl(self,IP,subnet,Parts):
 		counter=0
 		step1=0
 		step2=0
@@ -70,7 +70,7 @@ class Subnetter:
 			return False
 
 	#Creating SubnetMask with subnet data
-	def subnetMask(self,subnet):
+	def _subnetMask(self,subnet):
 		counter=3
 		remaining=subnet%8
 		fullpart=subnet/8
@@ -85,7 +85,7 @@ class Subnetter:
 				fullmask=halfmask[0:s+1]
 		return fullmask
 
-	def broadcast(self,parts,subnet):
+	def _broadcastID(self,parts,subnet):
 		Broadcast =""
 		fullpart=subnet/8
 		remaining=subnet%8
@@ -113,7 +113,7 @@ class Subnetter:
 
 
 	#The networkid created from parts of the IP and the subnet data.
-	def networkID(self,parts,subnet):
+	def _networkID(self,parts,subnet):
 		NetworkID=""
 		fullpart=subnet/8
 		remaining=subnet%8
@@ -139,14 +139,14 @@ class Subnetter:
 				break
 		return NetworkID
 		#Parts of SubnetMask
-	def wildCard(self,parts):
+	def _wildCard(self,parts):
 		Wildcard=""
 		for i in range(4):
 			Wildcard=Wildcard+str((255-int(parts[i])))+"."
 		Wildcard=Wildcard[0:len(Wildcard)-1]
 		return Wildcard
 		#Calculating how many host can connect that network.
-	def totalHost(self,subnet):
+	def _totalHost(self,subnet):
 		hostbits=32-subnet
 		hosts=1
 		for i in range(hostbits):
@@ -161,19 +161,19 @@ class Subnetter:
 
 	def __init__(self,data):
 				
-			self.subnet=self.findSubnet(data)
-			self.address=self.findIP(data)
+			self.subnet=self._findSubnet(data)
+			self.address=self._findIP(data)
 			if int(self.subnet)==32:
-				self.subnetmask=self.subnetMask(int(self.subnet))
-				self.wildcard=self.wildCard(self.seperator(self.subnetmask))
+				self.subnetmask=self._subnetMask(int(self.subnet))
+				self.wildcard=self._wildCard(self.seperator(self.subnetmask))
 				self.networkid=self.address
 				self.broadcast=self.address
 				self.totalhost=1
 
 
-			elif self.subnetControl(self.address,self.subnet,self.seperator(self.address))==True:
-				self.subnetmask=self.subnetMask(int(self.subnet))
-				self.wildcard=self.wildCard(self.seperator(self.subnetmask))
-				self.networkid=self.networkID(self.seperator(self.address),int(self.subnet))
-				self.broadcast=self.broadcast(self.seperator(self.address),int(self.subnet))
-				self.totalhost=self.totalHost(int(self.subnet))
+			elif self._subnetControl(self.address,self.subnet,self.seperator(self.address))==True:
+				self.subnetmask=self._subnetMask(int(self.subnet))
+				self.wildcard=self._wildCard(self.seperator(self.subnetmask))
+				self.networkid=self._networkID(self.seperator(self.address),int(self.subnet))
+				self.broadcast=self._broadcastID(self.seperator(self.address),int(self.subnet))
+				self.totalhost=self._totalHost(int(self.subnet))
