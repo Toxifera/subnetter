@@ -2,7 +2,7 @@
 It gives subnet mask, wildcard, networkid, broadcast, total host information for given an IP &amp; subnet.
 
 ## Download & Usage
-`git clone github.com/Toxifera/subnetter.py`
+`git clone github.com/Toxifera/subnetter`
 
 ### Example 
 `python2.7 : from subnetter import Subnetter`
