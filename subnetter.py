@@ -57,7 +57,7 @@ class Subnetter:
 				if step2==4:
 					counter = counter+1
 		except ValueError:
-			print "Please enter a valid IP and a Subnet "
+			print ("Please enter a valid IP and a Subnet ")
 			exit()
 		
 		#Third Step
